@@ -1,4 +1,4 @@
-import { MailAdapter } from '../repositories/adapters/mail-adapter';
+import { MailAdapter } from '../adapters/mail-adapter';
 import { FeedbacksRepository } from '../repositories/feedbacks-repository';
 
 interface SubmitFeedbackServiceRequest {
@@ -35,11 +35,13 @@ export class SubmitFeedbackService {
     });
 
     await this.mailAdapter.sendMail({
+      to: 'João Pedro Luz <joao.luz@mail.com>',
       subject: 'Novo feedback',
       body: [
         '<div style="font-family: sans-serif; font-size: 16px; color: #111;">',
         `<p>Tipo do feedback: ${type}</p>`,
         `<p>Comentário: ${comment}</p>`,
+        screenshot && (`<img src="${screenshot}" />`),
         '<div>',
       ].join('\n'),
     });
